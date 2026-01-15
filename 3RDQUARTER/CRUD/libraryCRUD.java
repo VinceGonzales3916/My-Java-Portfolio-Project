@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class LibraryCRUD {
+public class libraryCRUD {
 
     // Main window
     JFrame frame;
@@ -26,11 +26,11 @@ public class LibraryCRUD {
     TableRowSorter<DefaultTableModel> sorter;
 
     // Main data storage
-    ArrayList<Book> books = new ArrayList<>();
+    ArrayList<book> books = new ArrayList<>();
 
     // Program entry point
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new LibraryCRUD().createUI());
+        SwingUtilities.invokeLater(() -> new libraryCRUD().createUI());
     }
 
     // Build the UI
@@ -91,13 +91,12 @@ public class LibraryCRUD {
             }
         });
 
-     // Set default multi-column sort: ID → Title → Date
+        // Default multi-column sort: ID → Title → Date
         sorter.setSortKeys(Arrays.asList(
-            new RowSorter.SortKey(0, SortOrder.ASCENDING),
-            new RowSorter.SortKey(1, SortOrder.ASCENDING),
-            new RowSorter.SortKey(3, SortOrder.ASCENDING)
+                new RowSorter.SortKey(0, SortOrder.ASCENDING),
+                new RowSorter.SortKey(1, SortOrder.ASCENDING),
+                new RowSorter.SortKey(3, SortOrder.ASCENDING)
         ));
-
 
         // Scroll pane for table
         JScrollPane scrollPane = new JScrollPane(table);
@@ -141,46 +140,43 @@ public class LibraryCRUD {
                 JOptionPane.showMessageDialog(frame, "Invalid date format (yyyy-MM-dd)", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
             // Empty field check
             if (txtID.getText().trim().isEmpty() ||
                     txtTitle.getText().trim().isEmpty() ||
                     txtAuthor.getText().trim().isEmpty() ||
                     txtDate.getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Please fill all fields", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            // Duplicate ID + Title check
-            for (Book b : books) {
+                JOptionPane.showMessageDialog(frame, "Please fill all fields", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Duplicate check
+            for (book b : books) {
                 if (b.getId().getId().equalsIgnoreCase(txtID.getText().trim()) &&
-                    b.getTitle().getTitle().equalsIgnoreCase(txtTitle.getText().trim()) &&
-                    !b.getAuthors().getAuthors().equalsIgnoreCase(txtAuthor.getText().trim())) {
-                    continue; // Same ID+Title but different author is allowed
-                }
-                if (b.getId().getId().equalsIgnoreCase(txtID.getText().trim()) &&
-                    b.getTitle().getTitle().equalsIgnoreCase(txtTitle.getText().trim()) &&
-                    b.getAuthors().getAuthors().equalsIgnoreCase(txtAuthor.getText().trim())) {
+                        b.getTitle().getTitle().equalsIgnoreCase(txtTitle.getText().trim()) &&
+                        b.getAuthors().getAuthors().equalsIgnoreCase(txtAuthor.getText().trim())) {
                     JOptionPane.showMessageDialog(frame, "Duplicate book found!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
             // Create book object
-            Book book = new Book(
-                new BookID(txtID.getText().trim()),
-                new Title(txtTitle.getText().trim()),
-                new Authors(txtAuthor.getText().trim()),
-                new PublishedDate(txtDate.getText().trim())
+            book newBook = new book(
+                    new bookID(txtID.getText().trim()),
+                    new title(txtTitle.getText().trim()),
+                    new authors(txtAuthor.getText().trim()),
+                    new publishedDate(txtDate.getText().trim())
             );
 
             // Add to list
-            books.add(book);
+            books.add(newBook);
 
             // Add to table
             model.addRow(new Object[]{
-                book.getId().getId(),
-                book.getTitle().getTitle(),
-                book.getAuthors().getAuthors(),
-                book.getPublishedDate().getDate()
+                    newBook.getId().getId(),
+                    newBook.getTitle().getTitle(),
+                    newBook.getAuthors().getAuthors(),
+                    newBook.getPublishedDate().getDate()
             });
 
             // Sort table
@@ -203,30 +199,30 @@ public class LibraryCRUD {
             }
 
             int row = table.convertRowIndexToModel(viewRow);
-            Book book = books.get(row);
+            book selectedBook = books.get(row);
 
-            // Duplicate check for update
-            for (Book b : books) {
-                if (b == book) continue; // Skip current row
+            // Duplicate check
+            for (book b : books) {
+                if (b == selectedBook) continue;
                 if (b.getId().getId().equalsIgnoreCase(txtID.getText().trim()) &&
-                    b.getTitle().getTitle().equalsIgnoreCase(txtTitle.getText().trim()) &&
-                    b.getAuthors().getAuthors().equalsIgnoreCase(txtAuthor.getText().trim())) {
+                        b.getTitle().getTitle().equalsIgnoreCase(txtTitle.getText().trim()) &&
+                        b.getAuthors().getAuthors().equalsIgnoreCase(txtAuthor.getText().trim())) {
                     JOptionPane.showMessageDialog(frame, "Duplicate book found!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
             // Update book
-            book.getId().setId(txtID.getText().trim());
-            book.getTitle().setTitle(txtTitle.getText().trim());
-            book.getAuthors().setAuthors(txtAuthor.getText().trim());
-            book.getPublishedDate().setDate(txtDate.getText().trim());
+            selectedBook.getId().setId(txtID.getText().trim());
+            selectedBook.getTitle().setTitle(txtTitle.getText().trim());
+            selectedBook.getAuthors().setAuthors(txtAuthor.getText().trim());
+            selectedBook.getPublishedDate().setDate(txtDate.getText().trim());
 
             // Update table
-            model.setValueAt(book.getId().getId(), row, 0);
-            model.setValueAt(book.getTitle().getTitle(), row, 1);
-            model.setValueAt(book.getAuthors().getAuthors(), row, 2);
-            model.setValueAt(book.getPublishedDate().getDate(), row, 3);
+            model.setValueAt(selectedBook.getId().getId(), row, 0);
+            model.setValueAt(selectedBook.getTitle().getTitle(), row, 1);
+            model.setValueAt(selectedBook.getAuthors().getAuthors(), row, 2);
+            model.setValueAt(selectedBook.getPublishedDate().getDate(), row, 3);
 
             // Re-sort
             sorter.sort();
@@ -256,16 +252,15 @@ public class LibraryCRUD {
 
         // TABLE row click event
         table.getSelectionModel().addListSelectionListener(e -> {
-
             int viewRow = table.getSelectedRow();
             if (viewRow >= 0) {
                 int row = table.convertRowIndexToModel(viewRow);
-                Book book = books.get(row);
+                book selectedBook = books.get(row);
 
-                txtID.setText(book.getId().getId());
-                txtTitle.setText(book.getTitle().getTitle());
-                txtAuthor.setText(book.getAuthors().getAuthors());
-                txtDate.setText(book.getPublishedDate().getDate());
+                txtID.setText(selectedBook.getId().getId());
+                txtTitle.setText(selectedBook.getTitle().getTitle());
+                txtAuthor.setText(selectedBook.getAuthors().getAuthors());
+                txtDate.setText(selectedBook.getPublishedDate().getDate());
             }
         });
     }
