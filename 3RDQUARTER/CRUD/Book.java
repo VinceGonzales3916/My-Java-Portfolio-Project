@@ -1,12 +1,12 @@
 package MyLibrarySystem;
 
-public class Book {
-    private BookID id;
-    private Title title;
-    private Authors authors;
-    private PublishedDate publishedDate;
+public class book {
+    private bookID id;
+    private title title;
+    private authors authors;
+    private publishedDate publishedDate;
 
-    public Book(BookID id, Title title, Authors authors, PublishedDate publishedDate) {
+    public book(bookID id, title title, authors authors, publishedDate publishedDate) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -14,36 +14,36 @@ public class Book {
     }
 
     // GETTERS
-    public BookID getId() {
+    public bookID getId() {
         return id;
     }
 
-    public Title getTitle() {
+    public title getTitle() {
         return title;
     }
 
-    public Authors getAuthors() {
+    public authors getAuthors() {
         return authors;
     }
 
-    public PublishedDate getPublishedDate() {
+    public publishedDate getPublishedDate() {
         return publishedDate;
     }
 
     // SETTERS
-    public void setId(BookID id) {
+    public void setId(bookID id) {
         this.id = id;
     }
 
-    public void setTitle(Title title) {
+    public void setTitle(title title) {
         this.title = title;
     }
 
-    public void setAuthors(Authors authors) {
+    public void setAuthors(authors authors) {
         this.authors = authors;
     }
 
-    public void setPublishedDate(PublishedDate publishedDate) {
+    public void setPublishedDate(publishedDate publishedDate) {
         this.publishedDate = publishedDate;
     }
 
