@@ -1,9 +1,9 @@
 package MyLibrarySystem;
 
-public class Title {
+public class title {
     private String title;
 
-    public Title(String title) {
+    public title(String title) {
         this.title = title;
     }
 
