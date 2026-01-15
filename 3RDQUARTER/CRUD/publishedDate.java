@@ -1,9 +1,9 @@
 package MyLibrarySystem;
 
-public class PublishedDate {
+public class publishedDate {
     private String date;
 
-    public PublishedDate(String date) {
+    public publishedDate(String date) {
         this.date = date;
     }
 
