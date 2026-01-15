@@ -1,9 +1,9 @@
 package MyLibrarySystem;
 
-public class BookID {
+public class bookID {
     private String id;
 
-    public BookID(String id) {
+    public bookID(String id) {
         this.id = id;
     }
 
