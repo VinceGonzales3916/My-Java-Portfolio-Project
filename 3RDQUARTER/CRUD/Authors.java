@@ -1,6 +1,6 @@
 package MyLibrarySystem;
 
-public class authors {
+public class Authors {
     private String authors;
 
     public authors(String authors) {
